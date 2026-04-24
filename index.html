@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Alex Volkov</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: #080808;
+  font-family: 'Manrope', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
+  overflow-x: hidden;
+}
+
+/* ── фоновые пятна ── */
+.bg {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden;
+}
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+}
+.b1 {
+  width: 480px; height: 480px;
+  top: -120px; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, #c0000a 0%, #6b0005 50%, transparent 80%);
+  animation: blobFloat 8s ease-in-out infinite alternate;
+}
+.b2 {
+  width: 300px; height: 300px;
+  bottom: 40px; right: -60px;
+  background: radial-gradient(circle, #7a0005 0%, transparent 70%);
+  animation: blobFloat 10s 2s ease-in-out infinite alternate;
+}
+.b3 {
+  width: 200px; height: 200px;
+  bottom: 80px; left: -40px;
+  background: radial-gradient(circle, #400003 0%, transparent 70%);
+  animation: blobFloat 7s 1s ease-in-out infinite alternate;
+}
+@keyframes blobFloat {
+  from { transform: translateY(0) scale(1); }
+  to   { transform: translateY(30px) scale(1.08); }
+}
+.b1 { animation-name: blobFloatCenter; }
+@keyframes blobFloatCenter {
+  from { transform: translateX(-50%) translateY(0) scale(1); }
+  to   { transform: translateX(-50%) translateY(20px) scale(1.05); }
+}
+
+/* ── обёртка ── */
+.wrap {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 400px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  animation: fadeUp .9s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(40px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── карточка профиля ── */
+.profile-card {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 32px 24px 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  position: relative; overflow: hidden;
+}
+
+/* красная полоска сверху */
+.profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e02020, #ff5555, #e02020, transparent);
+  border-radius: 0 0 4px 4px;
+}
+
+/* аватар */
+.av-ring {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(from 180deg, #c80010, #ff4444, #ff0000, #800005, #c80010);
+  animation: spin 6s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.av-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: #111;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.av-inner img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 50%;
+}
+
+.av-placeholder {
+  font-size: 40px; color: rgba(255,255,255,0.12);
+  line-height: 1;
+}
+
+.name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  color: #fff;
+  letter-spacing: .01em;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #ff4444;
+  margin-top: -4px;
+}
+
+.divline {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,60,60,.5), transparent);
+  border-radius: 2px;
+  margin: 2px 0;
+}
+
+.bio-text {
+  font-size: 13px; line-height: 1.7;
+  color: rgba(255,255,255,.5);
+  text-align: center; max-width: 290px;
+}
+
+/* ── ссылки ── */
+.links {
+  width: 100%;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.link-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 0 18px; height: 62px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  text-decoration: none;
+  color: #fff;
+  position: relative; overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+  cursor: pointer;
+  animation: fadeUp .8s cubic-bezier(.16,1,.3,1) both;
+}
+.link-btn:nth-child(1) { animation-delay: .1s; }
+.link-btn:nth-child(2) { animation-delay: .2s; }
+.link-btn:nth-child(3) { animation-delay: .3s; }
+
+/* shimmer при наведении */
+.link-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  transform: skewX(-20deg);
+  transition: left .5s ease;
+}
+.link-btn:hover::after { left: 160%; }
+
+.link-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: rgba(220,30,30,.5);
+  background: rgba(200,10,10,.1);
+}
+.link-btn:active { transform: scale(.97); }
+
+/* иконка */
+.btn-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.07);
+  transition: background .2s;
+}
+.link-btn:hover .btn-icon { background: rgba(220,30,30,.25); }
+
+/* текст */
+.btn-text { flex: 1; }
+.btn-title { display: block; font-size: 14px; font-weight: 600; color: #fff; }
+.btn-sub   { display: block; font-size: 11px; color: rgba(255,255,255,.4); margin-top: 1px; }
+
+/* стрелка */
+.btn-arrow {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 8px;
+  background: rgba(255,255,255,.06);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.3);
+  font-size: 14px;
+  transition: all .2s;
+}
+.link-btn:hover .btn-arrow {
+  background: rgba(220,30,30,.3);
+  color: #ff5555;
+}
+
+/* ── нижняя подпись ── */
+.footer-tag {
+  font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(255,255,255,.15);
+  margin-top: 4px;
+  animation: fadeUp 1s .5s both;
+}
+
+/* ── SVG иконки ── */
+svg { display: block; }
+
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
+</div>
+
+<div class="wrap">
+
+  <!-- профиль -->
+  <div class="profile-card">
+
+    <div class="av-ring">
+      <div class="av-inner">
+        <!--
+          Чтобы добавить фото — замени строку ниже на:
+          <img src="photo.jpg" alt="avatar">
+        -->
+        <img src="photo_2026-04-24_14-27-03.jpg" alt="avatar">
+      </div>
+    </div>
+
+    <h1 class="name">Ruby</h1>
+    <span class="tag">Dev Creator</span>
+    <div class="divline"></div>
+    <p class="bio-text">
+      Помогаю зарабатывать в интернете.
+      Делюсь кейсами, схемами и реальным опытом.
+      Пиши — всегда отвечу 🔥
+    </p>
+
+  </div>
+
+  <!-- кнопки -->
+  <div class="links">
+
+    <!-- Telegram личный -->
+    <a class="link-btn" href="https://t.me/username" target="_blank" rel="noopener">
+      <div class="btn-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24">
+          <path fill="#2AABEE" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.69 7.97c-.13.54-.47.67-.95.42l-2.56-1.89-1.24 1.19c-.14.14-.26.26-.52.26l.18-2.6 4.74-4.28c.21-.18-.05-.28-.32-.1L8.27 14.65l-2.5-.78c-.55-.17-.56-.55.11-.81L16.03 8c.45-.17.85.1.61.8z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Личный Telegram</span>
+        <span class="btn-sub">Написать напрямую</span>
+      </div>
+      <div class="btn-arrow">›</div>
+    </a>
+
+    <!-- Telegram группа -->
+    <a class="link-btn" href="https://t.me/groupname" target="_blank" rel="noopener">
+      <div class="btn-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24">
+          <path fill="#5BC8F5" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Группа в Telegram</span>
+        <span class="btn-sub">Вступить в сообщество</span>
+      </div>
+      <div class="btn-arrow">›</div>
+    </a>
+
+    <!-- Отзывы -->
+    <a class="link-btn" href="https://t.me/reviews" target="_blank" rel="noopener">
+      <div class="btn-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24">
+          <path fill="#FF4444" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
+        </svg>
+      </div>
+      <div class="btn-text">
+        <span class="btn-title">Отзывы клиентов</span>
+        <span class="btn-sub">Реальные результаты</span>
+      </div>
+      <div class="btn-arrow">›</div>
+    </a>
+
+  </div>
+
+  <p class="footer-tag">© 2025 · Alex Volkov</p>
+
+</div>
+
+</body>
+</html>
